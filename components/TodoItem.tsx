@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { ToDo } from "../App";
 
-function TodoItem(p: { todo: ToDo ; pressHandler:(todo:ToDo)=>void}) {
+function TodoItem(p: { todo: ToDo; pressHandler: (todo: ToDo) => void }) {
   return (
     <TouchableOpacity onPress={() => p.pressHandler(p.todo)}>
       <View style={styles.item}>
@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
   title: {
-      marginBottom: 1,
-      fontSize:14
+    marginBottom: 1,
+    fontSize: 14
   },
   date: {
-      marginTop:0,
-      fontSize:10
+    marginTop: 0,
+    fontSize: 10
   }
 });
 

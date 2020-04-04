@@ -1,24 +1,50 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList, ScrollView, Alert } from "react-native";
-import { ToDo } from "../App";
+import React, { useState, useContext } from "react";
+import { StyleSheet, View, ScrollView, Button } from "react-native";
+import { ToDo, TdsContext } from "../App";
 import TodoItem from "./TodoItem";
 
-function TodoList(p:{todosList: ToDo[] ;setTodosList:(todo:ToDo[]) => void}){
+function TodoList({ navigation }) {
+  const contextValue = useContext(TdsContext);
 
-    function pressHandler(todo:ToDo){
-        const newToDos = p.todosList.filter(todoMatching => todoMatching !== todo);
-        p.setTodosList(newToDos);
-        }
+  function navHandler() {
+    navigation.navigate("Form");
+  }
 
-    return(
-        <View>
-        <ScrollView>
-            {p.todosList.map(todo => (
-               <TodoItem todo={todo} pressHandler={pressHandler}/> 
-            ))}
-        </ScrollView>
-        </View>
+  function pressHandler(todo: ToDo) {
+    const newToDos = contextValue.todosList.filter(
+      todoMatching => todoMatching !== todo
     );
+    contextValue.setTodosList(newToDos);
+  }
+
+  return (
+    <TdsContext.Consumer>
+      {({ todosList }) => (
+        <View style={styles.container}>
+          <View style={styles.content}>
+            <Button onPress={navHandler} title="Add a todo" />
+            <View>
+              <ScrollView>
+                {todosList.map(todo => (
+                  <TodoItem todo={todo} pressHandler={pressHandler} />
+                ))}
+              </ScrollView>
+            </View>
+          </View>
+        </View>
+      )}
+    </TdsContext.Consumer>
+  );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff"
+  },
+  content: {
+    textAlign: "center",
+    padding: 40
+  }
+});
 export default TodoList;
